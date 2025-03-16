@@ -25,7 +25,8 @@ if __name__ == "__main__":
 
     # 定义批量大小和数据加载器
     batch_size = 64
-    train_loader, val_loader = get_data_loaders(x_train, y_train, x_test, y_test, batch_size)
+    # 如果数据为长时序，可设置 window_size（例如 window_size=100）；否则传 None
+    train_loader, val_loader = get_data_loaders(x_train, y_train, x_test, y_test, batch_size, window_size=100)
 
     # # 数据集文件路径
     # train_file = r"D:\CNN_BiLSTM_Transformer\project\Data\Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv"
@@ -52,7 +53,10 @@ if __name__ == "__main__":
     unique_labels = sorted(y_train.unique())  # 获取唯一标签
     num_classes = len(unique_labels)
     # model = HybridModel(input_dim=input_dim, hidden_dim=64, num_heads=8, num_classes=num_classes)
-    # 使用原始 HybridModel
+    # # 使用原始 HybridModel
+    # model = HybridModel(input_dim=input_dim, hidden_dim=64, num_heads=8, num_classes=num_classes, dropout=0.3)
+
+    # 使用改进后的 HybridModel（融合动态特征交互通道）
     model = HybridModel(input_dim=input_dim, hidden_dim=64, num_heads=8, num_classes=num_classes, dropout=0.3)
 
     # 使用消融实验模型
@@ -72,10 +76,24 @@ if __name__ == "__main__":
     scheduler = StepLR(optimizer, step_size=5, gamma=0.1)  # 每5个epoch学习率衰减为原来的0.1倍
 
     # 设置训练轮数
-    num_epochs = 1  # 修改为实际需要的训练轮数
+    num_epochs = 10  # 修改为实际需要的训练轮数
 
-    # 训练模型
-    # print("开始训练模型...")
+    # # 训练模型
+    # # print("开始训练模型...")
+    # print(f"开始训练模型: {type(model).__name__}...")
+    # train_model(
+    #     model=model,
+    #     train_loader=train_loader,
+    #     val_loader=val_loader,
+    #     num_epochs=num_epochs,
+    #     criterion=criterion,
+    #     optimizer=optimizer,
+    #     device=device,
+    #     patience=5,  # 早停容忍次数
+    #     step_size=5,  # 学习率调度器步长
+    #     gamma=0.1  # 学习率衰减因子
+    # )
+
     print(f"开始训练模型: {type(model).__name__}...")
     train_model(
         model=model,
@@ -84,10 +102,10 @@ if __name__ == "__main__":
         num_epochs=num_epochs,
         criterion=criterion,
         optimizer=optimizer,
+        scheduler=scheduler,
         device=device,
         patience=5,  # 早停容忍次数
-        step_size=5,  # 学习率调度器步长
-        gamma=0.1  # 学习率衰减因子
+        initial_temp=1.0  # 初始温度
     )
 
     # 评估模型并输出最终指标

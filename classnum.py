@@ -3,14 +3,14 @@ import pandas as pd
 # 文件路径和标签列
 # file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\UNSW_NB15_training-set.csv"
 # file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\UNSW_NB15_testing-set.csv"
-#file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\Monday-WorkingHours.pcap_ISCX.csv"#1
+file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\Monday-WorkingHours.pcap_ISCX.csv"#1
 #file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\Tuesday-WorkingHours.pcap_ISCX.csv"#3
 #file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\Wednesday-workingHours.pcap_ISCX.csv"#6
 #file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv"#4
 #file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv"#2
 #file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv"#2
 #file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv"#2
-file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\Friday-WorkingHours-Morning.pcap_ISCX.csv"#2
+# file_path = r"D:\CNN_BiLSTM_Transformer\project\Data\Friday-WorkingHours-Morning.pcap_ISCX.csv"#2
 
 #label_column = "label"  # UNSW_NB15数据集的类名
 label_column = "Label"  # CIC-IDS2017数据集的类名
